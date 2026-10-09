@@ -1,9 +1,127 @@
 @import 'tailwindcss';
 
+@import './components/btn.css' layer(components);
+@import './components/form.css' layer(components);
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-background: oklch(0.12 0 0);
+    --color-foreground: oklch(0.95 0 0);
+    --color-card: oklch(0.16 0 0);
+    --color-primary: oklch(0.65 0.15 160);
+    --color-primary-foreground: oklch(0.12 0 0);
+    --color-border: oklch(0.24 0 0);
+    --color-input: oklch(0.24 0 0);
+    --color-muted-foreground: oklch(0.6 0 0);
 }
+
+  /* <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Tahoma', sans-serif;
+      background-color: #08080a;
+      color: #e5e5e7;
+      margin: 0;
+      padding: 0;
+      direction: ltr;
+    }
+
+    header {
+      background: #0d0d10;
+      padding: 24px 40px;
+      color: white;
+      border-bottom: 1px solid #24202d;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: left;
+      font-size: 28px;
+      font-weight: 600;
+      color: #c084fc;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      margin-right: 24px;
+      color: #92909a;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s ease;
+    }
+
+    nav a:hover {
+      color: #c084fc;
+    }
+
+    .auth-buttons {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .register-btn {
+      padding: 8px 16px;
+      border: 1px solid #c084fc;
+      border-radius: 6px;
+      background: transparent;
+      color: #c084fc;
+      text-decoration: none;
+      font-family: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .register-btn:hover {
+      background: #c084fc;
+      color: #08080a;
+    }
+
+    .form-error {
+      margin-top: 8px;
+      color: #f87171;
+      font-size: 0.70rem;
+    }
+
+    main {
+      padding: 50px 40px;
+      min-height: calc(100vh - 150px);
+    }
+
+    .info-box {
+      margin-top: 40px;
+      padding: 24px;
+      background: #101014;
+      border: 1px solid #28222f;
+      border-radius: 10px;
+      display: inline-block;
+      text-align: right;
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+    }
+
+    footer {
+      background: #0d0d10;
+      padding: 16px 40px;
+      color: #66636e;
+      border-top: 1px solid #24202d;
+      width: 100%;
+      text-align: left;
+      font-size: 13px;
+    }
+  </style> */

@@ -21,7 +21,7 @@ class Tune extends Model
 
     // Default attributes
     protected $attributes = [
-        'status' => TuneStatus::PENDING,
+        'status' => TuneStatus::PENDING->value,
     ];
     public function user(): BelongsTo
     {
