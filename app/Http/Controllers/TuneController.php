@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Tune;
 use App\Http\Requests\StoreTuneRequest;
 use App\Http\Requests\UpdateTuneRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class TuneController extends Controller
 {
@@ -13,7 +15,11 @@ class TuneController extends Controller
      */
     public function index()
     {
-        //
+        $tunes = Auth::user()->tunes()->get();
+
+        return view('tune.index', [ 
+            'tunes' => $tunes
+        ]);
     }
 
     /**
@@ -37,7 +43,9 @@ class TuneController extends Controller
      */
     public function show(Tune $tune)
     {
-        //
+        return view('tune.show', [
+            'tune' => $tune
+        ]);
     }
 
     /**
