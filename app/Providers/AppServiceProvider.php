@@ -21,7 +21,7 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {   
+    {
         // dont provid protection for update method
         Model::unguard();
         // prevent lazy loading, accecing doe

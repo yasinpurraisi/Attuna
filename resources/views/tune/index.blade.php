@@ -4,6 +4,14 @@
             <h1 class="text-3xl font-bold">Ideas</h1>
             <p class="text-muted-foreground text-sm mt-2"> Capture yor thoughts. Make a plan.</p>
         </header>
+        <div>
+            <a href="/tunes" class="btn {{ request()->has('status') ? 'btn-outlined' : '' }}">All</a>
+            @foreach (App\TuneStatus::cases() as $status)
+                <a href="/tunes?status={{ $status->value }}" class="btn {{ request('status') === $status->value ? '' : 'btn-outlined' }}">
+                    {{ $status->label() }}<span class="ml-1 text-muted-foreground">({{ Auth::user()->tunes()->where('status', $status)->count() }})</span>
+                </a>    
+            @endforeach
+        </div>
         <div class="mt-10">
             <div class="grid md:grid-cols-2 gap-6">
                 @forelse($tunes as $tune)
