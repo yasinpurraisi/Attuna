@@ -19,6 +19,7 @@ class TuneController extends Controller
     {
         $tunes = Auth::user()->tunes()
             ->when($request->status, fn ($query, $status) => $query->where('status', $status))
+            ->latest()
             ->get();
 
         return view('tune.index', [
@@ -37,9 +38,11 @@ class TuneController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTuneRequest $request): void
+    public function store(StoreTuneRequest $request)
     {
-        //
+        Auth::user()->tunes()->create($request->validated());
+
+        return to_route('tunes.index')->with('success', 'Tune created');
     }
 
     /**
@@ -71,8 +74,10 @@ class TuneController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tune $tune): void
+    public function destroy(Tune $tune)
     {
-        //
+        //!Authorize that is allowed.
+        $tune->delete();
+        return to_route('tunes.index');
     }
 }
