@@ -32,9 +32,32 @@
             <x-card>
                 <div class="text-foreground prose prose-invert max-w-none cursor-pointer ">{{ $tune->description }}</div>
             </x-card>
+            {{-- ---------Task---------------- --}}
             <div>
-                <h3 class="text-lg font-semibold mb-2">Links</h3>
-                <div class="flex gap-x-3 mt-2 flex-wrap space-y-2">
+                <h3 class="text-xl font-bold mt-6">Tasks</h3>
+                <div class="mt-3 space-y-2">
+                    @forelse($tune->tasks as $task)
+                        <x-card>
+                            <form method="POST" action="{{ route('tasks.update', $task) }}">
+                                @csrf
+                                @method('PATCH')
+                                <div class="flex items-center gap-x-3">
+                                    <button type ="submit" class="size-5 flex items-center justify-center rounded-lg text-primary-foreground  {{ $task->completed ? 'bg-primary' : 'border border-primary ' }}">&check;</button>
+                                    <span class="{{ $task->completed ? 'line-through' : '' }}">{{ $task->description }}</span>
+
+                                </div>
+                            </form>
+                        </x-card>
+                    @empty
+                        <p class="text-sm text-muted-foreground">No links available.</p>
+                    @endforelse
+                </div>
+
+            </div>            
+            {{-- --------Links------------- --}}
+            <div>
+                <h3 class="text-xl font-bold mt-6">Links</h3>
+                <div class="mt-3 space-y-2">
                     @forelse($tune->links as $link)
                         <x-card :href="$link" class="text-primary hover:text-primary/80 font-medium flex gap-x-3 items-center">
                             {{ $link }}

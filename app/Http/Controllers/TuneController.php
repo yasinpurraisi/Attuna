@@ -40,7 +40,12 @@ class TuneController extends Controller
      */
     public function store(StoreTuneRequest $request)
     {
-        Auth::user()->tunes()->create($request->validated());
+        // Auth::user()->tunes()->create($request->safe()->except('tasks'));
+        $tune = Auth::user()->tunes()->create($request->safe()->except('tasks'));
+        $tune->tasks()->createMany(
+        collect($request->tasks)->map(
+            fn($task)=>['description'=>$task])
+        );
 
         return to_route('tunes.index')->with('success', 'Tune created');
     }

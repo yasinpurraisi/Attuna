@@ -87,9 +87,18 @@
 
         </div>
 
-        {{-- Modal --}}
+        {{-- -------------------Modal------------------------ --}}
         <x-layout.model name="create_tune" title="New Tune">
-            <form x-data="{status: 'pending'}" method="POST" action="{{ route('tunes.store') }}">
+            <form 
+            x-data="{
+                status: 'pending',
+                newLink: '',
+                links: [],
+                newTask: '',
+                tasks: [],
+            }" 
+            method="POST" 
+            action="{{ route('tunes.store') }}">
                 @csrf
                   <div class="space-y-6">
                     <x-form.field
@@ -125,7 +134,100 @@
                         name="description"
                         type="textarea"
                         placeholder="Describe your tune..."
-                    />     
+                    />  
+                    {{-- ---------Task---------------- --}}
+                    <div>   
+
+                        <fieldset class="space-y-3">
+
+                            <legend class="label">Tasks</legend>
+
+                            <template x-for="(task, index) in tasks">
+
+                                <div class="flex gap-x-2 items-center">
+
+                                    <input class="input" name="tasks[]" x-model="task">
+
+                                    <button 
+                                    type="button" 
+                                    class="text-4xl" 
+                                    @click="tasks.splice(index, 1);"
+                                    >×</button>
+
+                                </div>
+
+                            </template>
+
+
+                            <div class="flex gap-x-2 items-center">
+
+                                <input 
+                                x-model="newTask"
+                                id="new-task" 
+                                placeholder="Add a Task..." 
+                                class="input flex-1"
+                                spellcheck="false"
+                                />
+
+                                <button 
+                                type="button" 
+                                class="text-4xl" 
+                                @click="tasks.push(newTask); newTask='' "
+                                :disabled="newTask.trim().length === 0">+</button>
+
+                            </div>
+
+                        </fieldset>
+
+                    </div>
+
+                    {{-- --------Links HERE------ --}}
+                    <div>   
+
+                        <fieldset class="space-y-3">
+
+                            <legend class="label">Links</legend>
+
+                            <template x-for="(link, index) in links">
+
+                                <div class="flex gap-x-2 items-center">
+
+                                    <input class="input" name="links[]" x-model="link">
+
+                                    <button 
+                                    type="button" 
+                                    class="text-4xl" 
+                                    @click="links.splice(index, 1);"
+                                    >×</button>
+
+                                </div>
+
+                            </template>
+
+
+                            <div class="flex gap-x-2 items-center">
+
+                                <input 
+                                x-model="newLink"
+                                type="url" 
+                                id="new-link" 
+                                placeholder="http://example.com" 
+                                autocomplete="url"
+                                class="input flex-1"
+                                spellcheck="false"
+                                />
+
+                                <button 
+                                type="button" 
+                                class="text-4xl" 
+                                @click="links.push(newLink.trim()); newLink='' "
+                                :disabled="newLink.trim().length === 0">+</button>
+
+                            </div>
+
+                        </fieldset>
+
+                    </div>
                     <div class="flex justify-end gap-x-5">
                         <button type="button" @click="$dispatch('close-modal')">Cancel</button>  
                         <button type="submit" class="btn">Create</button>   

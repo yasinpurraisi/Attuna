@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TuneController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,6 +14,8 @@ Route::get('/tunes', [TuneController::class, 'index'])->name('tunes.index')->mid
 Route::post('/tunes', [TuneController::class, 'store'])->name('tunes.store')->middleware('auth');
 Route::get('/tunes/{tune}', [TuneController::class, 'show'])->name('tunes.show')->middleware('auth');
 Route::delete('/tunes/{tune}', [TuneController::class, 'destroy'])->name('tunes.destroy')->middleware('auth');
+
+Route::patch('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update')->middleware('auth');
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->middleware('guest');
 Route::post('/register', [RegisteredUserController::class, 'store'])->middleware('guest');

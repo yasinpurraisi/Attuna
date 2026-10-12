@@ -30,6 +30,10 @@ class StoreTuneRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'status' => ['required', Rule::enum(TuneStatus::class)],
+            'links' => ['nullable', 'array'],
+            'links.*' => ['string', 'max:255'],
+            'steps' => ['nullable', 'array'],
+            'steps.*' => ['string', 'max:255'],            
         ];
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Tune::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Tune::class)->constrained('tunes')->cascadeOnDelete();
             $table->string('description');
             $table->boolean('completed')->default(false);
             $table->timestamps();
