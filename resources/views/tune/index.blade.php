@@ -56,6 +56,11 @@
                 @forelse ($tunes as $tune)
 
                     <x-card href="{{ route('tunes.show', $tune->id) }}">
+                        @if ($tune->image_path)
+                            <div class="mb-4 -mx-4 -mt-4 rounded-t-lg overflow-hidden">
+                                <img src="{{ asset('storage/'. $tune->image_path) }}" alt="" class="w-full h-auto object-cover">
+                            </div>
+                        @endif
 
                         <h3 class="text-foreground text-lg">
                             {{ $tune->title }}
@@ -98,7 +103,8 @@
                 tasks: [],
             }" 
             method="POST" 
-            action="{{ route('tunes.store') }}">
+            action="{{ route('tunes.store') }}"
+            enctype="multipart/form-data">
                 @csrf
                   <div class="space-y-6">
                     <x-form.field
@@ -135,6 +141,12 @@
                         type="textarea"
                         placeholder="Describe your tune..."
                     />  
+                    {{-- -----------Image--------- --}}
+                    <div class="space-y-2">
+                        <label for="image" class="label">Featured Image</label>
+                        <input type="file" name="image" accept="image/*"/>
+                        <x-form.error name="image" />
+                    </div>
                     {{-- ---------Task---------------- --}}
                     <div>   
 

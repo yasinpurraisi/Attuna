@@ -20,6 +20,11 @@
 
 
         <div class="mt-8 space-y-6">
+            @if ($tune->image_path)
+                <div class="rounded-lg overflow-hidden">
+                    <img src="{{ asset('storage/'. $tune->image_path) }}" alt="" class="w-full h-auto object-cover">
+                </div>
+            @endif
             <h1 class="text-4xl font-bold">{{ $tune->title }}</h1>
 
             <div class="mt-2 flex gap-x-3 items-center">

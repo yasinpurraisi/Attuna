@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateTune;
 use App\Http\Requests\StoreTuneRequest;
 use App\Http\Requests\UpdateTuneRequest;
 use App\Models\Tune;
@@ -15,6 +16,7 @@ class TuneController extends Controller
     /**
      * Display a listing of the resource.
      */
+    /** @var User */
     public function index(Request $request)
     {
         $tunes = Auth::user()->tunes()
@@ -38,14 +40,22 @@ class TuneController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTuneRequest $request)
+    public function store(StoreTuneRequest $request, CreateTune $action)
     {
-        // Auth::user()->tunes()->create($request->safe()->except('tasks'));
-        $tune = Auth::user()->tunes()->create($request->safe()->except('tasks'));
-        $tune->tasks()->createMany(
-        collect($request->tasks)->map(
-            fn($task)=>['description'=>$task])
-        );
+        // // Auth::user()->tunes()->create($request->safe()->except('tasks'));
+        // $tune = Auth::user()->tunes()->create($request->safe()->except('tasks', 'image'));
+        // $tune->tasks()->createMany(
+        //     collect($request->tasks)->map(
+        //         fn ($task) => ['description' => $task])
+        // );
+
+        // if ($request->hasFile('image')) {
+        //     $imagePath = $request->file('image')->store('tunes', 'public');
+        //     $tune->update([
+        //         'image_path' => $imagePath,
+        //     ]);
+        // }
+        $action->handle($request->safe()->all());
 
         return to_route('tunes.index')->with('success', 'Tune created');
     }
@@ -81,8 +91,9 @@ class TuneController extends Controller
      */
     public function destroy(Tune $tune)
     {
-        //!Authorize that is allowed.
+        // !Authorize that is allowed.
         $tune->delete();
+
         return to_route('tunes.index');
     }
 }

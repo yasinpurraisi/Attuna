@@ -33,7 +33,10 @@ class StoreTuneRequest extends FormRequest
             'links' => ['nullable', 'array'],
             'links.*' => ['string', 'max:255'],
             'steps' => ['nullable', 'array'],
-            'steps.*' => ['string', 'max:255'],            
+            'steps.*' => ['string', 'max:255'],
+            'tasks' => ['nullable', 'array'],
+            'tasks.*' => ['string', 'max:255'],
+            'image' => ['nullable', 'image', 'max:5120'],
         ];
     }
 }
