@@ -9,7 +9,12 @@
             </a>
 
             <div class="gap-x-3 flex items-center">
-                <a href="" class="btn btn-outlined">Edit</a>
+                <button 
+                    type="button"
+                    class="btn btn-outlined"
+                    x-data
+                    @click="$dispatch('open-modal', 'edit_tune')"
+                >Edit</button>
                 <form action="{{route('tunes.destroy', $tune->id)}}" method="POST" onsubmit="return confirm('Are you sure you want to delete this tune?');">
                     @csrf
                     @method('DELETE')
@@ -34,9 +39,12 @@
                 <div class="text-sm text-muted-foreground">{{ $tune->created_at->diffForHumans() }}</div>
             </div>
 
-            <x-card>
-                <div class="text-foreground prose prose-invert max-w-none cursor-pointer ">{{ $tune->description }}</div>
-            </x-card>
+            @if ($tune->description)
+                <x-card>
+                    <div class="text-foreground prose prose-invert max-w-none cursor-pointer ">{{ $tune->description }}</div>
+                </x-card>                
+            @endif
+
             {{-- ---------Task---------------- --}}
             <div>
                 <h3 class="text-xl font-bold mt-6">Tasks</h3>
@@ -75,6 +83,8 @@
             </div>
 
         </div>
+        {{-- -------------------Modal------------------------ --}}
+        <x-tune.modal :tune="$tune" />
     
     </div>
 

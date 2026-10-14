@@ -21,7 +21,7 @@ class CreateTune
      *     description?: string|null,
      *     links?: array<int, string>,
      *     steps?: array<int, string>,
-     *     tasks?: array<int, string>,
+     *     tasks?: array<int, array{description: string, completed?: bool|int|string}>,
      *     image?: UploadedFile|null
      * } $attributes
      */
@@ -36,6 +36,7 @@ class CreateTune
         $data = collect($attributes)
             ->only(['title', 'description', 'status', 'links'])
             ->toArray();
+        $data['links'] = $attributes['links'] ?? [];
 
         $image = $attributes['image'] ?? null;
 
@@ -53,7 +54,10 @@ class CreateTune
             $tune = $user->tunes()->create($data);
 
             $tasks = collect($attributes['tasks'] ?? [])
-                ->map(static fn (string $task): array => ['description' => $task])
+                ->map(static fn (array $task): array => [
+                    'description' => $task['description'],
+                    'completed' => filter_var($task['completed'] ?? false, FILTER_VALIDATE_BOOLEAN),
+                ])
                 ->all();
 
             $tune->tasks()->createMany($tasks);

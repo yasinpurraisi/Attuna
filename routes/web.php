@@ -6,6 +6,7 @@ use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TuneController;
+use App\Http\Controllers\TuneImageController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/tunes');
@@ -14,6 +15,10 @@ Route::get('/tunes', [TuneController::class, 'index'])->name('tunes.index')->mid
 Route::post('/tunes', [TuneController::class, 'store'])->name('tunes.store')->middleware('auth');
 Route::get('/tunes/{tune}', [TuneController::class, 'show'])->name('tunes.show')->middleware('auth');
 Route::delete('/tunes/{tune}', [TuneController::class, 'destroy'])->name('tunes.destroy')->middleware('auth');
+
+Route::patch('/tunes/{tune}', [TuneController::class, 'update'])->name('tunes.update')->middleware('auth');
+
+Route::delete('/tunes/{tune}/image', [TuneImageController::class, 'destroy'])->name('tunes.image.destroy')->middleware('auth');
 
 Route::patch('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update')->middleware('auth');
 

@@ -9,7 +9,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreTuneRequest extends FormRequest
+class TuneRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -35,7 +35,9 @@ class StoreTuneRequest extends FormRequest
             'steps' => ['nullable', 'array'],
             'steps.*' => ['string', 'max:255'],
             'tasks' => ['nullable', 'array'],
-            'tasks.*' => ['string', 'max:255'],
+            'tasks.*' => ['array'],
+            'tasks.*.description' => ['required', 'string', 'max:255'],
+            'tasks.*.completed' => ['boolean'],
             'image' => ['nullable', 'image', 'max:5120'],
         ];
     }

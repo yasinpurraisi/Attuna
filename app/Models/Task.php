@@ -22,4 +22,11 @@ class Task extends Model
     {
         return $this->belongsTo(Tune::class);
     }
+
+    protected function casts(): array
+    {
+        return [
+            'completed' => 'boolean',
+        ];
+    }
 }

@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Actions\CreateTune;
-use App\Http\Requests\StoreTuneRequest;
-use App\Http\Requests\UpdateTuneRequest;
+use App\Actions\UpdateTune;
+use App\Http\Requests\TuneRequest;
 use App\Models\Tune;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class TuneController extends Controller
 {
@@ -40,7 +41,7 @@ class TuneController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTuneRequest $request, CreateTune $action)
+    public function store(TuneRequest $request, CreateTune $action)
     {
         // // Auth::user()->tunes()->create($request->safe()->except('tasks'));
         // $tune = Auth::user()->tunes()->create($request->safe()->except('tasks', 'image'));
@@ -65,6 +66,8 @@ class TuneController extends Controller
      */
     public function show(Tune $tune)
     {
+        Gate::authorize('workWith', $tune);
+
         return view('tune.show', [
             'tune' => $tune,
         ]);
@@ -75,15 +78,20 @@ class TuneController extends Controller
      */
     public function edit(Tune $tune): void
     {
-        //
+        Gate::authorize('workWith', $tune);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTuneRequest $request, Tune $tune): void
+    public function update(TuneRequest $request, Tune $tune, UpdateTune $action)
     {
-        //
+        Gate::authorize('workWith', $tune);
+
+        $action->handle($request->safe()->all(), $tune);
+
+        return back()->with('success', 'Tune Updated!');
+
     }
 
     /**
@@ -91,7 +99,7 @@ class TuneController extends Controller
      */
     public function destroy(Tune $tune)
     {
-        // !Authorize that is allowed.
+        Gate::authorize('workWith', $tune);
         $tune->delete();
 
         return to_route('tunes.index');
