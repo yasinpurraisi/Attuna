@@ -14,6 +14,9 @@ class TunePolicy
      */
     public function workWith(User $user, Tune $tune): bool
     {
-        return $tune->user->is($user);
+        return (int) $tune->user_id === (int) $user->id
+            || $tune->sharedWith()
+                ->where('users.id', $user->id)
+                ->exists();
     }
 }

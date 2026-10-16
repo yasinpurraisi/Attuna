@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Casts\AsArrayObject;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Tune extends Model
@@ -38,5 +39,16 @@ class Tune extends Model
             'links' => AsArrayObject::class,
             'status' => TuneStatus::class,
         ];
+    }
+
+
+    public function sharedWith(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'tune_user',
+            'tune_id',
+            'user_id'
+        )->withTimestamps();
     }
 }
