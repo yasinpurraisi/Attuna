@@ -18,19 +18,21 @@ class RegisteredUserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'min:3'],
-            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')],
+            'username' => ['required', 'string', 'min:3', 'max:30', 'alpha_dash' ,Rule::unique('users', 'username')],
             'password' => ['required', 'string', 'min:8'],
         ]);
 
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'password' => $validated['password'],
         ]);
 
         Auth::login($user);
+
+        $request->session()->regenerate();
 
         return redirect('/')->with('success', 'Account created successfully!');
     }

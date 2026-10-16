@@ -5,7 +5,7 @@
 
         <header class="py-8 md:py-12">
 
-            <h1 class="text-3xl font-bold">Ideas</h1>
+            <h1 class="text-3xl font-bold text-primary">Tunes</h1>
 
             <p class="text-muted-foreground text-sm mt-2">
                 Capture your thoughts. Make a plan.
@@ -74,16 +74,17 @@
                             {{ $tune->description }}
                         </div>
 
-                        <div class="mt-4">
-                            {{ $tune->created_at->diffForHumans() }}
+                        <div class="flex items-center justify-between mt-4 text-sm text-muted-foreground">
+                            <span>{{ '@' . $tune->user->username }}</span>
+                            <span>{{ $tune->created_at->diffForHumans() }}</span>
                         </div>
 
                     </x-card>
 
                 @empty
 
-                    <h2 class="text-4xl font-bold text-purple-600">
-                        No ideas at this time
+                    <h2 class="text-3xl font-bold">
+                        No Tunes at this time
                     </h2>
 
                 @endforelse

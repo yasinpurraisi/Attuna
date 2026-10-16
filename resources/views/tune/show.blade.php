@@ -27,6 +27,7 @@
         <div class="mt-8 space-y-6">
             @if ($tune->image_path)
                 <div class="rounded-lg overflow-hidden">
+
                     <img src="{{ asset('storage/'. $tune->image_path) }}" alt="" class="w-full h-auto object-cover">
                 </div>
             @endif
