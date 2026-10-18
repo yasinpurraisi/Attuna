@@ -37,7 +37,7 @@ Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.up
 Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy')->middleware('auth');
 
 
-
+// TODO: Add authorization before allowing deletion
 Route::middleware('auth')->group(function () {
     // Current user's profile
     Route::get('/profile', [ProfileController::class, 'index'])

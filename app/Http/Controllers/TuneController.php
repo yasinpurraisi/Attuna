@@ -127,11 +127,8 @@ class TuneController extends Controller
     /**
      * Update a tune and its sharing permissions.
      */
-    public function update(
-        TuneRequest $request,
-        Tune $tune,
-        UpdateTune $action
-    ): RedirectResponse {
+    public function update(TuneRequest $request, Tune $tune, UpdateTune $action): RedirectResponse 
+    {
         Gate::authorize('workWith', $tune);
 
         abort_unless(
